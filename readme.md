@@ -1,5 +1,7 @@
 ## ECDSA Node
 
+This site https://ecdsa-node-client-alpha.vercel.app/ is a platform designed to help students reinforce their learning from the first week of the Ethereum Development Bootcamp at Alchemy University. It provides an interactive tool that allows users to emulate signed transactions between Ethereum wallets, providing hands-on experience on how digital signatures are used between transactions.
+
 This project is an example of using a client and server to facilitate transfers between different addresses. Since there is just a single server on the back-end handling transfers, this is clearly very centralized. We won't worry about distributed consensus for this project.
 
 However, something that we would like to incoporate is Public Key Cryptography. By using Elliptic Curve Digital Signatures we can make it so the server only allows transfers that have been signed for by the person who owns the associated address.
