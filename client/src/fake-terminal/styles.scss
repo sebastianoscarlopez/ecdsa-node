@@ -14,7 +14,7 @@ $terminal-header-height: 30px;
   padding-bottom: 12px;
   position: relative;
   box-sizing: border-box;
-
+  width: 100%;
   .terminal-header {
     height: $terminal-header-height;
     background-color: #2d2d2d;

@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import server from "./server";
-import { unsecureSignature } from "./terminal/unsecureSignature";
-import Terminal from "./Terminal";
+import { unsecureSignature, unsecureWallets } from "./fake-terminal/unsecureSignature";
+import FakeTerminal from "./fake-terminal";
 
 function Transfer({ address, setBalance }) {
-  const [sendAmount, setSendAmount] = useState("123");
-  const [recipient, setRecipient] = useState(
-    "0x0efe7cbe0b6e28de7543eaf0af4a02a1b0cf0856"
-  );
+  const [sendAmount, setSendAmount] = useState("");
+  const [recipient, setRecipient] = useState("");
   const [signature, setSignature] = useState("");
   const [recoveryBit, setRecoveryBit] = useState(0);
   const [message, setMessage] = useState("");
+  const [publicKey, setPublicKey] = useState("");
 
   const setValue = (setter) => (evt) => setter(evt.target.value);
 
@@ -20,7 +19,7 @@ function Transfer({ address, setBalance }) {
     try {
       const {
         data: { balance },
-      } = await server.post(`send`, { signature, recoveryBit, message });
+      } = await server.post(`send`, { signature, recoveryBit, message, publicKey });
       setBalance(balance);
     } catch (ex) {
       alert(ex.response.data.message);
@@ -33,10 +32,11 @@ function Transfer({ address, setBalance }) {
     const amount = parseInt(sendAmount);
     if (address.length > 0 && amount > 0 && recipient.length > 0) {
       unsecureSignature({ sender: address, amount, recipient })
-        .then(({ signature, message, recoveryBit }) => {
+        .then(({ signature, message, recoveryBit, publicKey }) => {
           setSignature(signature);
           setMessage(message);
           setRecoveryBit(recoveryBit);
+          setPublicKey(publicKey);
         })
         .catch((ex) => console.error(ex));
     }
@@ -68,13 +68,16 @@ function Transfer({ address, setBalance }) {
         <input type="hidden" name="signature" value={signature} />
         <input type="hidden" name="recoveryBit" value={recoveryBit} />
         <input type="hidden" name="message" value={message} />
+        <input type="hidden" name="publicKey" value={publicKey} />
 
         <input type="submit" className="button" value="Transfer" />
       </form>
-      <Terminal
+      <FakeTerminal
         commands={[
           `Signing transaction: $${sendAmount} from ${recipient} to ${recipient}`,
           signature,
+          '#### Here some wallets to test ####',
+          ...unsecureWallets.map((wallet) => `address: 0x${wallet.address}`),
         ]}
       />
     </>

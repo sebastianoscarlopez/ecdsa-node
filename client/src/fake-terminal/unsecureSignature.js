@@ -2,7 +2,7 @@ import { sign } from "ethereum-cryptography/secp256k1";
 import { keccak256 } from "ethereum-cryptography/keccak";
 import { toHex, utf8ToBytes } from "ethereum-cryptography/utils";
 
-const unsecureWallets = [
+export const unsecureWallets = [
   {
     privateKey:
       "c65b62bdc1f346764a620dd1a70aed8ad259ee8dffa6560ee2ec4f81d9d25f82",
@@ -47,7 +47,8 @@ const signMessage = async (msg, privateKey) => {
 
 const chop0x = (str) => str.replace(/^0x/, "");
 export const unsecureSignature = async ({ sender, recipient, amount }) => {
-  const { privateKey } = unsecureWallets.find((w) =>chop0x(w.address) === chop0x(sender));
+  const { privateKey, publicKey } = unsecureWallets.find((w) =>chop0x(w.address) === chop0x(sender));
+  console.log({ privateKey, publicKey });
   const message = JSON.stringify({
     sender,
     recipient,
@@ -61,5 +62,6 @@ export const unsecureSignature = async ({ sender, recipient, amount }) => {
     signature,
     recoveryBit,
     message,
+    publicKey,
   };
 };
