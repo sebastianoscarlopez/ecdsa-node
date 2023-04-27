@@ -1,0 +1,91 @@
+$terminal-background-color: #1e1e1e;
+$terminal-foreground-color: #d4d4d4;
+$terminal-prompt-color: #2ed573;
+$terminal-input-color: #d4d4d4;
+$terminal-header-height: 30px;
+
+.terminal {
+  background-color: $terminal-background-color;
+  color: $terminal-foreground-color;
+  font-family: "Courier New", Courier, monospace;
+  border: 2px solid $terminal-foreground-color;
+  border-radius: 5px;
+  overflow: hidden;
+  padding-bottom: 12px;
+  position: relative;
+  box-sizing: border-box;
+
+  .terminal-header {
+    height: $terminal-header-height;
+    background-color: #2d2d2d;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+
+    .terminal-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+
+      .terminal-button {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 5px;
+      }
+
+      .close {
+        background-color: #ff5f56;
+      }
+
+      .minimize {
+        background-color: #ffbd2e;
+      }
+
+      .maximize {
+        background-color: #27c93f;
+      }
+    }
+
+    .terminal-title {
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+
+  .terminal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-left: 10px;
+
+    .terminal-text {
+      overflow-y: auto;
+      height: 100%;
+      padding-right: 5px;
+    }
+
+    .terminal-input {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+
+      .terminal-prompt {
+        color: $terminal-prompt-color;
+        margin-right: 5px;
+      }
+
+      .terminal-input-field {
+        background-color: transparent;
+        color: $terminal-input-color;
+        border: none;
+        font-family: inherit;
+        font-size: inherit;
+        flex: 1;
+        outline: none;
+      }
+    }
+  }
+}
